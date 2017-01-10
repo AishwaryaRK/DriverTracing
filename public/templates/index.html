@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html ng-app="DriverTracing">
+<head>
+    <title>Driver Tracing</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <link href='/Users/aishwaryakaneri/PetProjects/DriverTracing/public/css/main.css' rel='stylesheet'/>
+    <script type="text/javascript" src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.2/leaflet.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.2/leaflet.js"></script>
+    
+     <script type="text/javascript" src="/Users/aishwaryakaneri/PetProjects/DriverTracing/public/js/MovingMarker.js"></script>
+
+<!-- <script src='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css' rel='stylesheet' />
+ -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script type="text/javascript" src="/Users/aishwaryakaneri/PetProjects/DriverTracing/public/js/appAngular.js"></script>
+    <script type="text/javascript" src="/Users/aishwaryakaneri/PetProjects/DriverTracing/public/js/ApiFactory.js"></script>
+   <!-- <script type="text/javascript" src="/Users/aishwaryakaneri/PetProjects/OpenLayers-2.13.1/OpenLayers.js"></script>
+ -->
+    <style>
+        /*html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }*/
+
+        #map {
+            height: 730px;
+        }
+
+       /* .controls {
+            margin-top: 10px;
+            border: 1px solid transparent;
+            border-radius: 2px 0 0 2px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            height: 32px;
+            outline: none;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }*/
+
+      /*  #pac-input {
+            background-color: #fff;
+            font-family: Roboto;
+            font-size: 15px;
+            font-weight: 300;
+            margin-left: 12px;
+            padding: 0 11px 0 13px;
+            text-overflow: ellipsis;
+            width: 300px;
+        }
+
+        #pac-input:focus {
+            border-color: #4d90fe;
+        }
+
+        #floating-panel {
+            position: absolute;
+            top: 10px;
+            left: 25%;
+            z-index: 5;
+            background-color: #fff;
+            padding: 5px;
+            border: 1px solid #999;
+            text-align: center;
+            font-family: 'Roboto','sans-serif';
+            line-height: 30px;
+            padding-left: 10px;
+        }*/
+
+    </style>
+
+
+
+</head>
+<body>
+
+    <div class='logo navbar navbar-inverse navbar-fixed-top '>
+        <h2 class="headingbar" style="float:left; color: cyan">Driver Tracing</h2>
+    </div>
+
+    <div class='clearfix' style="height:70px"></div>
+
+    <div class='container-fluid'>
+        <div class='row'>
+            <div class='col-md-12 col-sm-12 col-lg-12' ng-controller="InputLocationController">
+           
+            <div class='col-md-10 col-sm-10 col-lg-10' id="map"></div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class='footer navbar-fixed-bottom navbar navbar-inverse'>
+<div ng-controller="FooterController">
+        <p style="font-size:15px">
+            &copy;{{copyrightLabel}}
+        </p>
+    </div>
+</div>
+
+
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5VxaFKWaCNQK0KztfGle2uTUxlC-KEE8&libraries=places&callback=initMap"
+        async defer></script>
+  -->       
+ </body>
+</html>
