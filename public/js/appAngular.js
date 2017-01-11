@@ -21,10 +21,6 @@ var map;
         // // add the layer to the map
         // map.addLayer(layer);
 
-//--------------------------------------------
- //        L.mapbox.accessToken = '';
- // map = L.mapbox.map('map', 'mapbox.streets')
- //    .setView([-8.650000, 115.216667], 9);
 
     //--------------------------------------------------------
 
@@ -39,12 +35,24 @@ var map;
 
 //-------------------------------------------------
 
-//         map = new OpenLayers.Map("map");
-//     map.addLayer(new OpenLayers.Layer.OSM());
-//     var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
-//     var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
-//     var position       = new OpenLayers.LonLat( 115.216667,-8.650000).transform( fromProjection, toProjection);
-// map.setCenter(position, 6);
+// var map = L.map('map').setView([-6.255172, 106.798665], 13);
+
+//   // load a tile layer
+//   L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png',
+//     {
+//       attribution: 'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
+//       maxZoom: 17,
+//       minZoom: 9
+//     }).addTo(map);
+
+//-----------------------------------------------------
+
+    // map = new OpenLayers.Map("map");
+    // map.addLayer(new OpenLayers.Layer.OSM());
+    // var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+    // var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+    // var position       = new OpenLayers.LonLat( 106.798665,-6.255172).transform( fromProjection, toProjection);
+    // map.setCenter(position, 15);
 
         // var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
         // L.tileLayer(
@@ -55,10 +63,54 @@ var map;
 
         // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?').addTo(map);
 
-        var myMovingMarker = L.Marker.movingMarker([[-6.255172, 106.798665],[-6.193758, 106.801614]],
-            [200000]).addTo(map);
-        myMovingMarker.start();
-        
+
+//************************************************************************************
+
+
+var myMovingMarker = L.Marker.movingMarker([[-6.255172, 106.798665],[-6.193758, 106.801614]],
+    [200000]).addTo(map);
+myMovingMarker.start();
+
+        // var line = L.polyline([[-6.255172, 106.798665],[-6.193758, 106.801614]]),
+        // animatedMarker = L.animatedMarker(line.getLatLngs(), {
+        //   interval: 20000, // milliseconds
+        // });
+
+        // map.addLayer(animatedMarker);
+
+//***************************************************************************************
+
+    // leaflet-routing-machine
+
+        // var routingMachine = L.Routing.control({
+        //     waypoints: [
+        //     L.latLng(-6.255172, 106.798665),
+        //     L.latLng(-6.193758, 106.801614)
+        //     ]
+        // }).addTo(map);
+        // var waypoints = routingMachine.getWaypoints();
+        // alert(JSON.stringify(waypoints));
+
+//------------------------------------------------------------------------------
+        var location1 = {
+            lng : 106.798665,
+            lat : -6.255172
+        };
+        var location2 = {
+            lng : 106.801614,
+            lat : -6.193758
+        };
+
+        ApiFactory.getShortestPath(location1,location2).then(function (waypoints) {
+            console.log(waypoints);
+            alert(waypoints.length);
+            // calculateAndDisplayRoute(directionsService, directionsDisplay, positions);
+            // document.getElementById('mode').addEventListener('change', function () {
+            //     calculateAndDisplayRoute(directionsService, directionsDisplay, positions);
+            // });
+        });
+
+
         // $scope.locations = [];
         // $scope.location;
         // $scope.addLocation = function () {
@@ -77,9 +129,9 @@ var map;
         // };
     }]);
 
-    app.controller('FooterController', ['$scope', function ($scope) {
-        $scope.copyrightLabel = new Date().getFullYear() + ' GO-JEK';
-    }]);
+app.controller('FooterController', ['$scope', function ($scope) {
+    $scope.copyrightLabel = new Date().getFullYear() + ' GO-JEK';
+}]);
 
 })();
 
