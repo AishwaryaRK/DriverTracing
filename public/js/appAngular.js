@@ -1,11 +1,9 @@
 'use strict';
 var app = angular.module('DriverTracing', []);
 var map;
-// var directionsDisplay;
-// var directionsService;
 (function () {
 
-    app.controller('InputLocationController', ['$scope', 'ApiFactory', function ($scope, ApiFactory) {
+    app.controller('InputLocationController', ['$scope', '$timeout', 'ApiFactory', function ($scope, $timeout, ApiFactory) {
 
         // map = L.map('map', {
         //     center: [-6.255172, 106.798665],
@@ -24,7 +22,7 @@ var map;
 
     //--------------------------------------------------------
 
-    var mapboxAccessToken = '';
+    var mapboxAccessToken = 'pk.eyJ1IjoiaGlyb2tpYXJrIiwiYSI6ImNpeHF4ZTBlbzBiamkzM2x2ZTVmbml5NHcifQ.77MjMgGSZcHGqVRBLBNz2Q';
     map = L.map('map').setView([-6.255172, 106.798665], 15);
 
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=' + mapboxAccessToken, {
@@ -33,100 +31,103 @@ var map;
     }).addTo(map);
 
 
-//-------------------------------------------------
-
-// var map = L.map('map').setView([-6.255172, 106.798665], 13);
-
-//   // load a tile layer
-//   L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png',
-//     {
-//       attribution: 'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
-//       maxZoom: 17,
-//       minZoom: 9
-//     }).addTo(map);
-
-//-----------------------------------------------------
-
-    // map = new OpenLayers.Map("map");
-    // map.addLayer(new OpenLayers.Layer.OSM());
-    // var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
-    // var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
-    // var position       = new OpenLayers.LonLat( 106.798665,-6.255172).transform( fromProjection, toProjection);
-    // map.setCenter(position, 15);
-
-        // var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
-        // L.tileLayer(
-        //   'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        //       attribution: 'Map data &copy; ' + mapLink,
-        //       maxZoom: 16,
-        // }).addTo(map);
-
-        // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?').addTo(map);
-
-
-//************************************************************************************
-
-
-var myMovingMarker = L.Marker.movingMarker([[-6.255172, 106.798665],[-6.193758, 106.801614]],
-    [200000]).addTo(map);
-myMovingMarker.start();
-
         // var line = L.polyline([[-6.255172, 106.798665],[-6.193758, 106.801614]]),
-        // animatedMarker = L.animatedMarker(line.getLatLngs(), {
-        //   interval: 20000, // milliseconds
-        // });
+        //     animatedMarker = L.animatedMarker(line.getLatLngs(), {
+        //           interval: 15000, // milliseconds
+        //       });
+        //     map.addLayer(animatedMarker);
 
-        // map.addLayer(animatedMarker);
+        //-------------------------------------------------
 
-//***************************************************************************************
+        // var map = L.map('map').setView([-6.255172, 106.798665], 13);
 
-    // leaflet-routing-machine
+        //   // load a tile layer
+        //   L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png',
+        //     {
+        //       attribution: 'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
+        //       maxZoom: 17,
+        //       minZoom: 9
+        //     }).addTo(map);
 
-        // var routingMachine = L.Routing.control({
-        //     waypoints: [
-        //     L.latLng(-6.255172, 106.798665),
-        //     L.latLng(-6.193758, 106.801614)
-        //     ]
-        // }).addTo(map);
-        // var waypoints = routingMachine.getWaypoints();
-        // alert(JSON.stringify(waypoints));
+        //-----------------------------------------------------
 
-//------------------------------------------------------------------------------
-        var location1 = {
-            lng : 106.798665,
-            lat : -6.255172
-        };
-        var location2 = {
-            lng : 106.801614,
-            lat : -6.193758
-        };
+            // map = new OpenLayers.Map("map");
+            // map.addLayer(new OpenLayers.Layer.OSM());
+            // var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+            // var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+            // var position       = new OpenLayers.LonLat( 106.798665,-6.255172).transform( fromProjection, toProjection);
+            // map.setCenter(position, 15);
 
-        ApiFactory.getShortestPath(location1,location2).then(function (waypoints) {
-            console.log(waypoints);
-            alert(waypoints.length);
-            // calculateAndDisplayRoute(directionsService, directionsDisplay, positions);
-            // document.getElementById('mode').addEventListener('change', function () {
-            //     calculateAndDisplayRoute(directionsService, directionsDisplay, positions);
-            // });
-        });
+                // var mapLink = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+                // L.tileLayer(
+                //   'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                //       attribution: 'Map data &copy; ' + mapLink,
+                //       maxZoom: 16,
+                // }).addTo(map);
+
+                // L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?').addTo(map);
 
 
-        // $scope.locations = [];
-        // $scope.location;
-        // $scope.addLocation = function () {
-        //     $scope.location = angular.element($('#pac-input')).val();
-        //     $scope.locations.push($scope.location);
-        //     $scope.location = null;
-        // };
-        // $scope.getShortestPath = function () {
-        //     ApiFactory.getShortestPath($scope.locations).then(function (positions) {
-        //         alert(JSON.stringify(positions));
-        //         calculateAndDisplayRoute(directionsService, directionsDisplay, positions);
-        //         document.getElementById('mode').addEventListener('change', function () {
-        //             calculateAndDisplayRoute(directionsService, directionsDisplay, positions);
-        //         });
-        //     });
-        // };
+            //***************************************************************************************
+
+            // leaflet-routing-machine
+
+                // var routingMachine = L.Routing.control({
+                //     waypoints: [
+                //     L.latLng(-6.255172, 106.798665),
+                //     L.latLng(-6.193758, 106.801614)
+                //     ]
+                // }).addTo(map);
+                // var waypoints = routingMachine.getWaypoints();
+                // alert(JSON.stringify(waypoints));
+
+            //------------------------------------------------------------------------------
+
+
+            var location1 = {
+                lng : 106.798665,
+                lat : -6.255172
+            };
+            var location2 = {
+                lng : 106.801614,
+                lat : -6.193758
+            };
+
+            ApiFactory.getShortestPath(location1,location2).then(function (rawWaypoints) {
+                var waypoints = getWaypoints(rawWaypoints);
+                console.log(waypoints);
+                alert(waypoints.length);
+
+                var line = L.polyline(waypoints, {snakingSpeed: 100});
+    line.addTo(map).snakeIn();
+
+                // for (var i = 0; i < waypoints.length - 1; i++) {
+                //     // $timeout(function () {
+                //         animateMarker( waypoints[i],waypoints[i+1]);
+                //     // }, 200);
+                // }
+
+              //   async.eachOfSeries(waypoints, function iterator(waypoint, i, callback) {
+              //       if(i < waypoints.length-1){
+              //         $timeout(function () {
+              //           animateMarker( waypoints[i],waypoints[i+1]);
+              //           callback(null);
+              //       }, 500);
+              //     }
+              // }, function done() {});
+
+                // waypoints.forEach(function(waypoint,i){
+                //      $timeout(function () {
+                //         animateMarker( waypoints[i],waypoints[i+1]);
+                //     }, 2000);
+                // });
+            });
+
+
+        // var myMovingMarker = L.Marker.movingMarker([[-6.255172, 106.798665],[-6.193758, 106.801614]],
+        //     [200000]).addTo(map);
+        // myMovingMarker.start();
+
     }]);
 
 app.controller('FooterController', ['$scope', function ($scope) {
@@ -195,28 +196,54 @@ function initMap() {
 }
 
 
-// function calculateAndDisplayRoute(directionsService, directionsDisplay, positions) {
-//     var selectedMode = document.getElementById('mode').value;
-//     var waypoints = [];
-//     for (var i = 1; i < positions.length - 1; i++) {
-//         waypoints.push({
-//             location: positions[i],
-//             stopover: true
-//         })
-//     }
-//     directionsService.route({
-//         origin: positions[0],
-//         destination: positions[positions.length - 1],
-//         waypoints: waypoints,
-//         travelMode: google.maps.TravelMode[selectedMode]
-//     }, function (response, status) {
-//         if (status == google.maps.DirectionsStatus.OK) {
-//             directionsDisplay.setDirections(response);
-//         } else {
-//             window.alert('Directions request failed due to ' + status);
-//         }
-//     });
-// }
+function getWaypoints(rawWaypoints){
+    // var waypoints=[];
+    // rawWaypoints.forEach(function(rawWaypoint){
+    //     var lng = rawWaypoint.intersections[0].location[0]
+    //     var lat = rawWaypoint.intersections[0].location[1];
+    //     waypoints.push({
+    //         lng: lng,
+    //         lat: lat
+    //     });
+    // });
+    // return waypoints;
+
+    var waypoints=[];
+    rawWaypoints.forEach(function(rawWaypoint){
+        var lng = rawWaypoint.intersections[0].location[0]
+        var lat = rawWaypoint.intersections[0].location[1];
+        waypoints.push([lat,lng]);
+    });
+    return waypoints;
+}
+
+function animateMarker(waypoint1, waypoint2){
+
+    // var newLatLng = new L.LatLng(waypoint1.lat, waypoint1.lng);
+    // marker.setLatLng(newLatLng); 
+
+    // L.marker([waypoint1.lat, waypoint1.lng]).update(marker);
+    
+
+    var latlngs = [[waypoint1.lat, waypoint1.lng],[waypoint2.lat, waypoint2.lng]];
+    var line = L.polyline(latlngs, {snakingSpeed: 100});
+    line.addTo(map).snakeIn();
+
+
+    // var line = L.polyline([[waypoint1.lat, waypoint1.lng],[waypoint2.lat, waypoint2.lng]]);
+    // var animatedMarker = L.animatedMarker(line.getLatLngs(), {
+    //       interval: 2000, // milliseconds
+    //   });
+    // map.addLayer(animatedMarker);
+}
+
+
+
+
+
+
+
+
 
 
 

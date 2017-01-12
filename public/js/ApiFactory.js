@@ -16,7 +16,7 @@
                 // }
 
                 getShortestPath: function (location1, location2) {
-                    return $http.get('https://api.mapbox.com/directions/v5/mapbox/driving/'+location1.lng+','+location1.lat+';'+location2.lng+','+location2.lat+'?geometries=polyline&steps=true&alternatives=true&access_token=')
+                    return $http.get('https://api.mapbox.com/directions/v5/mapbox/driving/'+location1.lng+','+location1.lat+';'+location2.lng+','+location2.lat+'?geometries=polyline&steps=true&alternatives=true&access_token=pk.eyJ1IjoiaGlyb2tpYXJrIiwiYSI6ImNpeHF4ZTBlbzBiamkzM2x2ZTVmbml5NHcifQ.77MjMgGSZcHGqVRBLBNz2Q')
                     .then(function (data) {
                         return data.data.routes[0].legs[0].steps;
                     }, xhrErrorHandler);
